@@ -25,6 +25,8 @@ LIMIT     n;
 
 (It's written in that order, but it's *executed* roughly as FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT. That's why you can't use a SELECT alias inside the WHERE.)
 
+> Without `ORDER BY`, row order is **not guaranteed**: each engine may return rows however it likes. This guide shows results in the order that's easiest to read.
+
 ---
 
 [← Previous](02-dml.md) · [Index](README.md) · [Next →](04-where.md) · 🇪🇸 [Español](../es/03-select.md)

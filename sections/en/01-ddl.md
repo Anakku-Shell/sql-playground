@@ -10,15 +10,16 @@ CREATE TABLE customers (
     name         VARCHAR(100) NOT NULL,
     email        VARCHAR(150) UNIQUE,
     city         VARCHAR(50),
-    signup_date  DATE DEFAULT CURRENT_DATE
+    signup_date  DATE DEFAULT (CURRENT_DATE)    -- MySQL requires the parentheses
 );
 
 CREATE TABLE orders (
     id           INT PRIMARY KEY,
-    customer_id  INT REFERENCES customers(id),   -- foreign key
+    customer_id  INT,
     product      VARCHAR(100),
     amount       DECIMAL(10,2),
-    order_date   DATE
+    order_date   DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)   -- foreign key
 );
 
 ALTER TABLE customers ADD COLUMN phone VARCHAR(20);   -- add a column
@@ -27,6 +28,8 @@ ALTER TABLE customers DROP COLUMN phone;              -- remove a column
 DROP TABLE orders;        -- deletes the whole table (structure + data)
 TRUNCATE TABLE orders;    -- empties the table but keeps it
 ```
+
+> ⚠️ Declare the foreign key separately, as above. MySQL accepts `customer_id INT REFERENCES customers(id)` inside the column, but **silently ignores it** and creates no constraint (PostgreSQL does create it).
 
 ---
 

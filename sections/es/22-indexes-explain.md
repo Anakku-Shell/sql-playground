@@ -11,7 +11,7 @@ Un índice es como el índice de un libro: en vez de leer todas las páginas (*f
 
 ## Qué indexar
 
-- Columnas que se usan mucho en `WHERE` y en `JOIN`, sobre todo las **claves foráneas** (`pedidos.cliente_id`). La `PRIMARY KEY` ya tiene índice automáticamente.
+- Columnas que se usan mucho en `WHERE` y en `JOIN`, sobre todo las **claves foráneas** (`pedidos.cliente_id`). La `PRIMARY KEY` ya tiene índice automáticamente, y en MySQL también cada `FOREIGN KEY` (PostgreSQL no indexa las claves foráneas por ti).
 - Columnas con muchos valores distintos (*alta selectividad*): `email` sí, `sexo` o `activo (sí/no)` normalmente no.
 
 ## Cuándo NO se usa el índice aunque exista
@@ -60,7 +60,7 @@ Salida de ejemplo en MySQL (simplificada), **antes** de crear el índice:
 +---------+------+------+--------+
 ```
 
-**Después** de `CREATE INDEX idx_pedidos_cliente ON pedidos(cliente_id)`:
+**Después** de `CREATE INDEX idx_pedidos_cliente ON pedidos(cliente_id)` (en MySQL, una `FOREIGN KEY` en esa columna ya habría creado uno):
 
 ```
 +---------+------+---------------------+------+

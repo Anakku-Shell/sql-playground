@@ -24,6 +24,7 @@ SELECT * FROM nombre;
 Usa la tabla `empleados` del self join (sección 7): Carmen es la jefa, Pedro y Lucía dependen de Carmen, y Jorge depende de Pedro.
 
 ```sql
+-- MySQL
 WITH RECURSIVE jerarquia AS (
     SELECT id, nombre, 1 AS nivel,
            CAST(nombre AS CHAR(200)) AS ruta          -- caso base: quien no tiene jefe
@@ -55,9 +56,12 @@ ORDER BY ruta;
 
 Con un self join normal solo llegas a un nivel. Con la recursiva llegas a todos, sin saber cuántos hay.
 
+En **PostgreSQL**, cambia `CAST(nombre AS CHAR(200))` por `CAST(nombre AS TEXT)`: la columna tiene que tener el mismo tipo en el caso base y en el paso recursivo.
+
 ## Generar una serie (por ejemplo, días de un mes)
 
 ```sql
+-- MySQL
 WITH RECURSIVE dias AS (
     SELECT DATE '2026-01-01' AS dia
     UNION ALL
@@ -68,6 +72,8 @@ FROM dias d
 LEFT JOIN pedidos p ON p.fecha = d.dia
 GROUP BY d.dia;           -- salen también los días SIN ventas, con 0
 ```
+
+En **PostgreSQL**, el paso recursivo es `SELECT CAST(dia + INTERVAL '1 day' AS DATE) FROM dias ...`. Para series, allí también puedes usar directamente `generate_series(DATE '2026-01-01', DATE '2026-01-31', INTERVAL '1 day')`.
 
 > ⚠️ Si el paso recursivo nunca deja de producir filas, el bucle es infinito. MySQL lo corta a las 1000 iteraciones (`cte_max_recursion_depth`) y SQL Server a las 100 (`OPTION (MAXRECURSION n)`).
 >

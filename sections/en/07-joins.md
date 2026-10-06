@@ -18,6 +18,8 @@ customers                orders
                         +----+-------------+--------+
 ```
 
+(Order 13 can only exist if `orders` has no foreign key; it's here to show what each JOIN does with unmatched rows.)
+
 ## INNER JOIN — only rows that match on both sides
 
 ```sql
@@ -106,6 +108,8 @@ CROSS JOIN sizes s;
 | Marta | L    |
 +-------+------+
 ```
+
+(Without `ORDER BY` the engine may return them in a different order; add `ORDER BY c.name` to group them by customer.)
 
 Useful for generating every possible combination (products × sizes, employees × days of the month...). Careful with big tables: 10,000 × 10,000 = 100 million rows.
 

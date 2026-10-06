@@ -5,8 +5,9 @@
 # 11. Índices y vistas (lo justo) · 🟡 ⭐⭐
 
 ```sql
-CREATE INDEX idx_pedidos_cliente ON pedidos(cliente_id);  -- acelera búsquedas/joins
-DROP INDEX idx_pedidos_cliente;
+CREATE INDEX idx_pedidos_fecha ON pedidos(fecha);         -- acelera búsquedas y ordenación por fecha
+DROP INDEX idx_pedidos_fecha ON pedidos;                  -- MySQL y SQL Server
+DROP INDEX idx_pedidos_fecha;                             -- PostgreSQL y SQLite
 
 CREATE VIEW resumen_clientes AS                            -- "consulta guardada"
 SELECT c.nombre, SUM(p.importe) AS total

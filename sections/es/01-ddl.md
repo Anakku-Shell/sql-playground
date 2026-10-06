@@ -10,15 +10,16 @@ CREATE TABLE clientes (
     nombre      VARCHAR(100) NOT NULL,
     email       VARCHAR(150) UNIQUE,
     ciudad      VARCHAR(50),
-    fecha_alta  DATE DEFAULT CURRENT_DATE
+    fecha_alta  DATE DEFAULT (CURRENT_DATE)    -- MySQL exige los paréntesis
 );
 
 CREATE TABLE pedidos (
     id          INT PRIMARY KEY,
-    cliente_id  INT REFERENCES clientes(id),   -- clave foránea
+    cliente_id  INT,
     producto    VARCHAR(100),
     importe     DECIMAL(10,2),
-    fecha       DATE
+    fecha       DATE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)   -- clave foránea
 );
 
 ALTER TABLE clientes ADD COLUMN telefono VARCHAR(20);   -- añadir columna
@@ -27,6 +28,8 @@ ALTER TABLE clientes DROP COLUMN telefono;              -- quitar columna
 DROP TABLE pedidos;        -- borra la tabla entera (estructura + datos)
 TRUNCATE TABLE pedidos;    -- vacía la tabla pero la deja creada
 ```
+
+> ⚠️ Escribe la clave foránea aparte, como arriba. MySQL acepta `cliente_id INT REFERENCES clientes(id)` dentro de la columna, pero **lo ignora sin avisar** y no crea la restricción (PostgreSQL sí la crea).
 
 ---
 

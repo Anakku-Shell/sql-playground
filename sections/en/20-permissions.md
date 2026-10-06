@@ -10,6 +10,7 @@ Golden rule: **least privilege**. Each user or application gets only the permiss
 
 ```sql
 CREATE USER 'analyst'@'localhost' IDENTIFIED BY 'change_this_password';
+CREATE USER 'app'@'%' IDENTIFIED BY 'change_this_password';           -- '%' = from any host
 
 GRANT SELECT ON shop.* TO 'analyst'@'localhost';                     -- read the whole database
 GRANT SELECT, INSERT, UPDATE ON shop.orders TO 'app'@'%';            -- a specific table

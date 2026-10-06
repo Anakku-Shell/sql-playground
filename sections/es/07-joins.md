@@ -18,6 +18,8 @@ clientes                 pedidos
                         +----+------------+---------+
 ```
 
+(El pedido 13 solo puede existir si `pedidos` no tiene clave foránea; está aquí para ver qué hace cada JOIN con las filas sin pareja.)
+
 ## INNER JOIN — solo las filas que coinciden en ambas
 
 ```sql
@@ -106,6 +108,8 @@ CROSS JOIN tallas t;
 | Marta  | L     |
 +--------+-------+
 ```
+
+(Sin `ORDER BY` el motor puede devolverlas en otro orden; añade `ORDER BY c.nombre` si quieres agruparlas por cliente.)
 
 Sirve para generar todas las combinaciones posibles (productos × tallas, empleados × días del mes...). Ojo con tablas grandes: 10.000 × 10.000 = 100 millones de filas.
 

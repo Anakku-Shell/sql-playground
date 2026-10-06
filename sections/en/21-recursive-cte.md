@@ -24,6 +24,7 @@ SELECT * FROM name;
 Uses the `employees` table from the self join (section 7): Carmen is the boss, Pedro and Lucía report to Carmen, and Jorge reports to Pedro.
 
 ```sql
+-- MySQL
 WITH RECURSIVE hierarchy AS (
     SELECT id, name, 1 AS level,
            CAST(name AS CHAR(200)) AS path            -- base case: whoever has no manager
@@ -55,9 +56,12 @@ ORDER BY path;
 
 A normal self join only gets you one level. The recursive one gets you all of them, without knowing how many there are.
 
+In **PostgreSQL**, replace `CAST(name AS CHAR(200))` with `CAST(name AS TEXT)`: the column must have the same type in the base case and the recursive step.
+
 ## Generating a series (e.g. the days of a month)
 
 ```sql
+-- MySQL
 WITH RECURSIVE days AS (
     SELECT DATE '2026-01-01' AS day
     UNION ALL
@@ -68,6 +72,8 @@ FROM days d
 LEFT JOIN orders o ON o.order_date = d.day
 GROUP BY d.day;           -- days WITHOUT sales also show up, with 0
 ```
+
+In **PostgreSQL**, the recursive step is `SELECT CAST(day + INTERVAL '1 day' AS DATE) FROM days ...`. For series you can also use `generate_series(DATE '2026-01-01', DATE '2026-01-31', INTERVAL '1 day')` directly.
 
 > ⚠️ If the recursive step never stops producing rows, the loop is infinite. MySQL stops it at 1000 iterations (`cte_max_recursion_depth`) and SQL Server at 100 (`OPTION (MAXRECURSION n)`).
 >

@@ -11,7 +11,7 @@ An index is like the index of a book: instead of reading every page (a *full sca
 
 ## What to index
 
-- Columns used a lot in `WHERE` and `JOIN`, especially **foreign keys** (`orders.customer_id`). The `PRIMARY KEY` already gets an index automatically.
+- Columns used a lot in `WHERE` and `JOIN`, especially **foreign keys** (`orders.customer_id`). The `PRIMARY KEY` already gets an index automatically, and in MySQL so does every `FOREIGN KEY` (PostgreSQL doesn't index foreign keys for you).
 - Columns with many distinct values (*high selectivity*): `email` yes; `gender` or `active (yes/no)` usually not.
 
 ## When the index ISN'T used even though it exists
@@ -60,7 +60,7 @@ Example MySQL output (simplified), **before** creating the index:
 +--------+------+------+--------+
 ```
 
-**After** `CREATE INDEX idx_orders_customer ON orders(customer_id)`:
+**After** `CREATE INDEX idx_orders_customer ON orders(customer_id)` (in MySQL, a `FOREIGN KEY` on that column would already have created one):
 
 ```
 +--------+------+---------------------+------+

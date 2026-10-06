@@ -10,6 +10,7 @@ Regla de oro: **mínimo privilegio**. Cada usuario o aplicación tiene solo los 
 
 ```sql
 CREATE USER 'analista'@'localhost' IDENTIFIED BY 'cambia_esta_clave';
+CREATE USER 'app'@'%' IDENTIFIED BY 'cambia_esta_clave';              -- '%' = desde cualquier host
 
 GRANT SELECT ON tienda.* TO 'analista'@'localhost';                    -- leer toda la BD
 GRANT SELECT, INSERT, UPDATE ON tienda.pedidos TO 'app'@'%';           -- tabla concreta

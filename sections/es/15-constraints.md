@@ -8,7 +8,7 @@ Las restricciones hacen que la **base de datos** impida datos incorrectos, en ve
 
 ```sql
 CREATE TABLE pedidos (
-    id          INT AUTO_INCREMENT PRIMARY KEY,            -- id automático
+    id          INT AUTO_INCREMENT PRIMARY KEY,            -- id automático (MySQL; otros motores, más abajo)
     cliente_id  INT NOT NULL,
     producto    VARCHAR(100) NOT NULL,
     importe     DECIMAL(10,2) NOT NULL CHECK (importe >= 0),

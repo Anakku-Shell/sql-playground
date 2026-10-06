@@ -67,15 +67,16 @@ CREATE TABLE clientes (
     nombre      VARCHAR(100) NOT NULL,
     email       VARCHAR(150) UNIQUE,
     ciudad      VARCHAR(50),
-    fecha_alta  DATE DEFAULT CURRENT_DATE
+    fecha_alta  DATE DEFAULT (CURRENT_DATE)    -- MySQL exige los paréntesis
 );
 
 CREATE TABLE pedidos (
     id          INT PRIMARY KEY,
-    cliente_id  INT REFERENCES clientes(id),   -- clave foránea
+    cliente_id  INT,
     producto    VARCHAR(100),
     importe     DECIMAL(10,2),
-    fecha       DATE
+    fecha       DATE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)   -- clave foránea
 );
 
 ALTER TABLE clientes ADD COLUMN telefono VARCHAR(20);   -- añadir columna
@@ -84,6 +85,8 @@ ALTER TABLE clientes DROP COLUMN telefono;              -- quitar columna
 DROP TABLE pedidos;        -- borra la tabla entera (estructura + datos)
 TRUNCATE TABLE pedidos;    -- vacía la tabla pero la deja creada
 ```
+
+> ⚠️ Escribe la clave foránea aparte, como arriba. MySQL acepta `cliente_id INT REFERENCES clientes(id)` dentro de la columna, pero **lo ignora sin avisar** y no crea la restricción (PostgreSQL sí la crea).
 
 ---
 
@@ -148,6 +151,8 @@ LIMIT     n;
 ```
 
 (Se escribe en ese orden; se *ejecuta* aproximadamente como FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT. Por eso no puedes usar un alias del SELECT dentro del WHERE.)
+
+> Sin `ORDER BY`, el orden de las filas **no está garantizado**: cada motor puede devolverlas como quiera. En esta guía los resultados se muestran en el orden más fácil de leer.
 
 ---
 
@@ -264,6 +269,8 @@ clientes                 pedidos
                         +----+------------+---------+
 ```
 
+(El pedido 13 solo puede existir si `pedidos` no tiene clave foránea; está aquí para ver qué hace cada JOIN con las filas sin pareja.)
+
 ### INNER JOIN — solo las filas que coinciden en ambas
 
 ```sql
@@ -352,6 +359,8 @@ CROSS JOIN tallas t;
 | Marta  | L     |
 +--------+-------+
 ```
+
+(Sin `ORDER BY` el motor puede devolverlas en otro orden; añade `ORDER BY c.nombre` si quieres agruparlas por cliente.)
 
 Sirve para generar todas las combinaciones posibles (productos × tallas, empleados × días del mes...). Ojo con tablas grandes: 10.000 × 10.000 = 100 millones de filas.
 
@@ -549,7 +558,7 @@ UPPER(nombre), LOWER(nombre)
 LENGTH(nombre)                -- LEN() en SQL Server
 TRIM(nombre)
 SUBSTRING(nombre, 1, 3)
-CONCAT(nombre, ' - ', ciudad) -- o nombre || ' - ' || ciudad en PostgreSQL/SQLite
+CONCAT(nombre, ' - ', ciudad) -- o nombre || ' - ' || ciudad en PostgreSQL/SQLite (en MySQL, || es un OR lógico)
 REPLACE(email, '@', ' at ')
 ```
 
@@ -566,8 +575,9 @@ YEAR(fecha)                   -- MySQL / SQL Server
 ## 11. Índices y vistas (lo justo) · 🟡 ⭐⭐
 
 ```sql
-CREATE INDEX idx_pedidos_cliente ON pedidos(cliente_id);  -- acelera búsquedas/joins
-DROP INDEX idx_pedidos_cliente;
+CREATE INDEX idx_pedidos_fecha ON pedidos(fecha);         -- acelera búsquedas y ordenación por fecha
+DROP INDEX idx_pedidos_fecha ON pedidos;                  -- MySQL y SQL Server
+DROP INDEX idx_pedidos_fecha;                             -- PostgreSQL y SQLite
 
 CREATE VIEW resumen_clientes AS                            -- "consulta guardada"
 SELECT c.nombre, SUM(p.importe) AS total
@@ -900,7 +910,7 @@ Las restricciones hacen que la **base de datos** impida datos incorrectos, en ve
 
 ```sql
 CREATE TABLE pedidos (
-    id          INT AUTO_INCREMENT PRIMARY KEY,            -- id automático
+    id          INT AUTO_INCREMENT PRIMARY KEY,            -- id automático (MySQL; otros motores, más abajo)
     cliente_id  INT NOT NULL,
     producto    VARCHAR(100) NOT NULL,
     importe     DECIMAL(10,2) NOT NULL CHECK (importe >= 0),
@@ -1345,6 +1355,7 @@ Regla de oro: **mínimo privilegio**. Cada usuario o aplicación tiene solo los 
 
 ```sql
 CREATE USER 'analista'@'localhost' IDENTIFIED BY 'cambia_esta_clave';
+CREATE USER 'app'@'%' IDENTIFIED BY 'cambia_esta_clave';              -- '%' = desde cualquier host
 
 GRANT SELECT ON tienda.* TO 'analista'@'localhost';                    -- leer toda la BD
 GRANT SELECT, INSERT, UPDATE ON tienda.pedidos TO 'app'@'%';           -- tabla concreta
@@ -1400,6 +1411,7 @@ SELECT * FROM nombre;
 Usa la tabla `empleados` del self join (sección 7): Carmen es la jefa, Pedro y Lucía dependen de Carmen, y Jorge depende de Pedro.
 
 ```sql
+-- MySQL
 WITH RECURSIVE jerarquia AS (
     SELECT id, nombre, 1 AS nivel,
            CAST(nombre AS CHAR(200)) AS ruta          -- caso base: quien no tiene jefe
@@ -1431,9 +1443,12 @@ ORDER BY ruta;
 
 Con un self join normal solo llegas a un nivel. Con la recursiva llegas a todos, sin saber cuántos hay.
 
+En **PostgreSQL**, cambia `CAST(nombre AS CHAR(200))` por `CAST(nombre AS TEXT)`: la columna tiene que tener el mismo tipo en el caso base y en el paso recursivo.
+
 ### Generar una serie (por ejemplo, días de un mes)
 
 ```sql
+-- MySQL
 WITH RECURSIVE dias AS (
     SELECT DATE '2026-01-01' AS dia
     UNION ALL
@@ -1444,6 +1459,8 @@ FROM dias d
 LEFT JOIN pedidos p ON p.fecha = d.dia
 GROUP BY d.dia;           -- salen también los días SIN ventas, con 0
 ```
+
+En **PostgreSQL**, el paso recursivo es `SELECT CAST(dia + INTERVAL '1 day' AS DATE) FROM dias ...`. Para series, allí también puedes usar directamente `generate_series(DATE '2026-01-01', DATE '2026-01-31', INTERVAL '1 day')`.
 
 > ⚠️ Si el paso recursivo nunca deja de producir filas, el bucle es infinito. MySQL lo corta a las 1000 iteraciones (`cte_max_recursion_depth`) y SQL Server a las 100 (`OPTION (MAXRECURSION n)`).
 >
@@ -1460,7 +1477,7 @@ Un índice es como el índice de un libro: en vez de leer todas las páginas (*f
 
 ### Qué indexar
 
-- Columnas que se usan mucho en `WHERE` y en `JOIN`, sobre todo las **claves foráneas** (`pedidos.cliente_id`). La `PRIMARY KEY` ya tiene índice automáticamente.
+- Columnas que se usan mucho en `WHERE` y en `JOIN`, sobre todo las **claves foráneas** (`pedidos.cliente_id`). La `PRIMARY KEY` ya tiene índice automáticamente, y en MySQL también cada `FOREIGN KEY` (PostgreSQL no indexa las claves foráneas por ti).
 - Columnas con muchos valores distintos (*alta selectividad*): `email` sí, `sexo` o `activo (sí/no)` normalmente no.
 
 ### Cuándo NO se usa el índice aunque exista
@@ -1509,7 +1526,7 @@ Salida de ejemplo en MySQL (simplificada), **antes** de crear el índice:
 +---------+------+------+--------+
 ```
 
-**Después** de `CREATE INDEX idx_pedidos_cliente ON pedidos(cliente_id)`:
+**Después** de `CREATE INDEX idx_pedidos_cliente ON pedidos(cliente_id)` (en MySQL, una `FOREIGN KEY` en esa columna ya habría creado uno):
 
 ```
 +---------+------+---------------------+------+
@@ -1612,8 +1629,9 @@ CREATE TABLE clientes (
     ciudad VARCHAR(50), fecha_alta DATE
 );
 CREATE TABLE pedidos (
-    id INT PRIMARY KEY, cliente_id INT REFERENCES clientes(id),
-    producto VARCHAR(100), importe DECIMAL(10,2), fecha DATE
+    id INT PRIMARY KEY, cliente_id INT,
+    producto VARCHAR(100), importe DECIMAL(10,2), fecha DATE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
 );
 
 INSERT INTO clientes VALUES

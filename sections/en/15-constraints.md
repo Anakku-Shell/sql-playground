@@ -8,7 +8,7 @@ Constraints make the **database** reject bad data, instead of trusting the appli
 
 ```sql
 CREATE TABLE orders (
-    id           INT AUTO_INCREMENT PRIMARY KEY,           -- automatic id
+    id           INT AUTO_INCREMENT PRIMARY KEY,           -- automatic id (MySQL; other engines below)
     customer_id  INT NOT NULL,
     product      VARCHAR(100) NOT NULL,
     amount       DECIMAL(10,2) NOT NULL CHECK (amount >= 0),

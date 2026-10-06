@@ -15,8 +15,9 @@ CREATE TABLE clientes (
     ciudad VARCHAR(50), fecha_alta DATE
 );
 CREATE TABLE pedidos (
-    id INT PRIMARY KEY, cliente_id INT REFERENCES clientes(id),
-    producto VARCHAR(100), importe DECIMAL(10,2), fecha DATE
+    id INT PRIMARY KEY, cliente_id INT,
+    producto VARCHAR(100), importe DECIMAL(10,2), fecha DATE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
 );
 
 INSERT INTO clientes VALUES

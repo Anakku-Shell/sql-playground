@@ -5,8 +5,9 @@
 # 11. Indexes and views (the essentials) · 🟡 ⭐⭐
 
 ```sql
-CREATE INDEX idx_orders_customer ON orders(customer_id);  -- speeds up lookups/joins
-DROP INDEX idx_orders_customer;
+CREATE INDEX idx_orders_date ON orders(order_date);       -- speeds up searching and sorting by date
+DROP INDEX idx_orders_date ON orders;                     -- MySQL and SQL Server
+DROP INDEX idx_orders_date;                               -- PostgreSQL and SQLite
 
 CREATE VIEW customer_summary AS                           -- a "saved query"
 SELECT c.name, SUM(o.amount) AS total

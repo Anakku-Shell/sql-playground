@@ -30,7 +30,7 @@ UPPER(name), LOWER(name)
 LENGTH(name)                -- LEN() in SQL Server
 TRIM(name)
 SUBSTRING(name, 1, 3)
-CONCAT(name, ' - ', city)   -- or name || ' - ' || city in PostgreSQL/SQLite
+CONCAT(name, ' - ', city)   -- or name || ' - ' || city in PostgreSQL/SQLite (in MySQL, || is a logical OR)
 REPLACE(email, '@', ' at ')
 ```
 

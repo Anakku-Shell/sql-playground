@@ -67,15 +67,16 @@ CREATE TABLE customers (
     name         VARCHAR(100) NOT NULL,
     email        VARCHAR(150) UNIQUE,
     city         VARCHAR(50),
-    signup_date  DATE DEFAULT CURRENT_DATE
+    signup_date  DATE DEFAULT (CURRENT_DATE)    -- MySQL requires the parentheses
 );
 
 CREATE TABLE orders (
     id           INT PRIMARY KEY,
-    customer_id  INT REFERENCES customers(id),   -- foreign key
+    customer_id  INT,
     product      VARCHAR(100),
     amount       DECIMAL(10,2),
-    order_date   DATE
+    order_date   DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)   -- foreign key
 );
 
 ALTER TABLE customers ADD COLUMN phone VARCHAR(20);   -- add a column
@@ -84,6 +85,8 @@ ALTER TABLE customers DROP COLUMN phone;              -- remove a column
 DROP TABLE orders;        -- deletes the whole table (structure + data)
 TRUNCATE TABLE orders;    -- empties the table but keeps it
 ```
+
+> ⚠️ Declare the foreign key separately, as above. MySQL accepts `customer_id INT REFERENCES customers(id)` inside the column, but **silently ignores it** and creates no constraint (PostgreSQL does create it).
 
 ---
 
@@ -148,6 +151,8 @@ LIMIT     n;
 ```
 
 (It's written in that order, but it's *executed* roughly as FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT. That's why you can't use a SELECT alias inside the WHERE.)
+
+> Without `ORDER BY`, row order is **not guaranteed**: each engine may return rows however it likes. This guide shows results in the order that's easiest to read.
 
 ---
 
@@ -264,6 +269,8 @@ customers                orders
                         +----+-------------+--------+
 ```
 
+(Order 13 can only exist if `orders` has no foreign key; it's here to show what each JOIN does with unmatched rows.)
+
 ### INNER JOIN — only rows that match on both sides
 
 ```sql
@@ -352,6 +359,8 @@ CROSS JOIN sizes s;
 | Marta | L    |
 +-------+------+
 ```
+
+(Without `ORDER BY` the engine may return them in a different order; add `ORDER BY c.name` to group them by customer.)
 
 Useful for generating every possible combination (products × sizes, employees × days of the month...). Careful with big tables: 10,000 × 10,000 = 100 million rows.
 
@@ -549,7 +558,7 @@ UPPER(name), LOWER(name)
 LENGTH(name)                -- LEN() in SQL Server
 TRIM(name)
 SUBSTRING(name, 1, 3)
-CONCAT(name, ' - ', city)   -- or name || ' - ' || city in PostgreSQL/SQLite
+CONCAT(name, ' - ', city)   -- or name || ' - ' || city in PostgreSQL/SQLite (in MySQL, || is a logical OR)
 REPLACE(email, '@', ' at ')
 ```
 
@@ -566,8 +575,9 @@ YEAR(order_date)                   -- MySQL / SQL Server
 ## 11. Indexes and views (the essentials) · 🟡 ⭐⭐
 
 ```sql
-CREATE INDEX idx_orders_customer ON orders(customer_id);  -- speeds up lookups/joins
-DROP INDEX idx_orders_customer;
+CREATE INDEX idx_orders_date ON orders(order_date);       -- speeds up searching and sorting by date
+DROP INDEX idx_orders_date ON orders;                     -- MySQL and SQL Server
+DROP INDEX idx_orders_date;                               -- PostgreSQL and SQLite
 
 CREATE VIEW customer_summary AS                           -- a "saved query"
 SELECT c.name, SUM(o.amount) AS total
@@ -900,7 +910,7 @@ Constraints make the **database** reject bad data, instead of trusting the appli
 
 ```sql
 CREATE TABLE orders (
-    id           INT AUTO_INCREMENT PRIMARY KEY,           -- automatic id
+    id           INT AUTO_INCREMENT PRIMARY KEY,           -- automatic id (MySQL; other engines below)
     customer_id  INT NOT NULL,
     product      VARCHAR(100) NOT NULL,
     amount       DECIMAL(10,2) NOT NULL CHECK (amount >= 0),
@@ -1345,6 +1355,7 @@ Golden rule: **least privilege**. Each user or application gets only the permiss
 
 ```sql
 CREATE USER 'analyst'@'localhost' IDENTIFIED BY 'change_this_password';
+CREATE USER 'app'@'%' IDENTIFIED BY 'change_this_password';           -- '%' = from any host
 
 GRANT SELECT ON shop.* TO 'analyst'@'localhost';                     -- read the whole database
 GRANT SELECT, INSERT, UPDATE ON shop.orders TO 'app'@'%';            -- a specific table
@@ -1400,6 +1411,7 @@ SELECT * FROM name;
 Uses the `employees` table from the self join (section 7): Carmen is the boss, Pedro and Lucía report to Carmen, and Jorge reports to Pedro.
 
 ```sql
+-- MySQL
 WITH RECURSIVE hierarchy AS (
     SELECT id, name, 1 AS level,
            CAST(name AS CHAR(200)) AS path            -- base case: whoever has no manager
@@ -1431,9 +1443,12 @@ ORDER BY path;
 
 A normal self join only gets you one level. The recursive one gets you all of them, without knowing how many there are.
 
+In **PostgreSQL**, replace `CAST(name AS CHAR(200))` with `CAST(name AS TEXT)`: the column must have the same type in the base case and the recursive step.
+
 ### Generating a series (e.g. the days of a month)
 
 ```sql
+-- MySQL
 WITH RECURSIVE days AS (
     SELECT DATE '2026-01-01' AS day
     UNION ALL
@@ -1444,6 +1459,8 @@ FROM days d
 LEFT JOIN orders o ON o.order_date = d.day
 GROUP BY d.day;           -- days WITHOUT sales also show up, with 0
 ```
+
+In **PostgreSQL**, the recursive step is `SELECT CAST(day + INTERVAL '1 day' AS DATE) FROM days ...`. For series you can also use `generate_series(DATE '2026-01-01', DATE '2026-01-31', INTERVAL '1 day')` directly.
 
 > ⚠️ If the recursive step never stops producing rows, the loop is infinite. MySQL stops it at 1000 iterations (`cte_max_recursion_depth`) and SQL Server at 100 (`OPTION (MAXRECURSION n)`).
 >
@@ -1460,7 +1477,7 @@ An index is like the index of a book: instead of reading every page (a *full sca
 
 ### What to index
 
-- Columns used a lot in `WHERE` and `JOIN`, especially **foreign keys** (`orders.customer_id`). The `PRIMARY KEY` already gets an index automatically.
+- Columns used a lot in `WHERE` and `JOIN`, especially **foreign keys** (`orders.customer_id`). The `PRIMARY KEY` already gets an index automatically, and in MySQL so does every `FOREIGN KEY` (PostgreSQL doesn't index foreign keys for you).
 - Columns with many distinct values (*high selectivity*): `email` yes; `gender` or `active (yes/no)` usually not.
 
 ### When the index ISN'T used even though it exists
@@ -1509,7 +1526,7 @@ Example MySQL output (simplified), **before** creating the index:
 +--------+------+------+--------+
 ```
 
-**After** `CREATE INDEX idx_orders_customer ON orders(customer_id)`:
+**After** `CREATE INDEX idx_orders_customer ON orders(customer_id)` (in MySQL, a `FOREIGN KEY` on that column would already have created one):
 
 ```
 +--------+------+---------------------+------+
@@ -1612,8 +1629,9 @@ CREATE TABLE customers (
     city VARCHAR(50), signup_date DATE
 );
 CREATE TABLE orders (
-    id INT PRIMARY KEY, customer_id INT REFERENCES customers(id),
-    product VARCHAR(100), amount DECIMAL(10,2), order_date DATE
+    id INT PRIMARY KEY, customer_id INT,
+    product VARCHAR(100), amount DECIMAL(10,2), order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
 INSERT INTO customers VALUES

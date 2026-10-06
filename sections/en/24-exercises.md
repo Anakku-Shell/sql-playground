@@ -15,8 +15,9 @@ CREATE TABLE customers (
     city VARCHAR(50), signup_date DATE
 );
 CREATE TABLE orders (
-    id INT PRIMARY KEY, customer_id INT REFERENCES customers(id),
-    product VARCHAR(100), amount DECIMAL(10,2), order_date DATE
+    id INT PRIMARY KEY, customer_id INT,
+    product VARCHAR(100), amount DECIMAL(10,2), order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
 INSERT INTO customers VALUES
