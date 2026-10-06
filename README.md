@@ -7,3 +7,7 @@ A quick-review guide to SQL, from the basics to window functions, recursive CTEs
 
 - 🇬🇧 [English](sql-guide.md)
 - 🇪🇸 [Español](sql-guide-es.md)
+
+## License
+
+[CC BY 4.0](LICENSE): you can share and adapt this material, as long as you give credit.
