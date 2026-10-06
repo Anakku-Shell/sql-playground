@@ -1,0 +1,10 @@
+{
+  "name": "sql-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test scripts/*.test.mjs",
+    "build:sections": "node scripts/split-guide.mjs",
+    "check:sections": "node scripts/split-guide.mjs --check"
+  }
+}
