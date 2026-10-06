@@ -2,6 +2,8 @@
 
 🇬🇧 [English version](sql-guide.md)
 
+📂 También disponible en [un fichero por sección](sections/es/README.md)
+
 ## Cómo leer este documento
 
 Cada sección lleva su **nivel** y su **importancia**:
