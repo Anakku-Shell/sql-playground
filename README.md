@@ -19,4 +19,4 @@ Read it all in one file, or one section at a time:
 
 ## License
 
-[CC BY 4.0](LICENSE): you can share and adapt this material, as long as you give credit.
+© 2026 Anakku-Shell. Licensed under [CC BY 4.0](LICENSE): you can share and adapt this material, as long as you give credit.
