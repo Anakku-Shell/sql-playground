@@ -48,8 +48,15 @@ More isolation means more safety, but more locking and lower performance.
 - Defaults: **MySQL** uses `REPEATABLE READ`; **PostgreSQL**, **SQL Server** and **Oracle** use `READ COMMITTED`.
 
 ```sql
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;   -- for the next transaction
+-- MySQL: set it BEFORE the transaction; it applies to the next one
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+START TRANSACTION;
+...
+COMMIT;
+
+-- PostgreSQL: set it INSIDE the transaction (before outside it does nothing)
 BEGIN;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;   -- or: BEGIN ISOLATION LEVEL SERIALIZABLE;
 ...
 COMMIT;
 ```
