@@ -1,0 +1,14 @@
+# guide-sql-hash: 9a583b8d1f30
+ both_null | pipes_give_null
+-----------+-----------------
+ t         | t
+(1 row)
+
+ name
+-------
+ Luis
+ Ana
+ Marta
+(3 rows)
+--- stderr ---
+

@@ -1,0 +1,28 @@
+# guide-sql-hash: 7572fa09499e
+ orphan_orders
+---------------
+             0
+(1 row)
+
+ id | has_default_date
+----+------------------
+  1 | t
+  2 | t
+  3 | t
+(3 rows)
+
+ id | name
+----+-------
+  1 | Ana
+  3 | Marta
+(2 rows)
+
+ id | name  |     email     |   city
+----+-------+---------------+-----------
+  1 | Ana   | ana@mail.com  | Madrid
+  2 | Luis  | luis@mail.com | Barcelona
+  3 | Marta |               | Madrid
+(3 rows)
+--- stderr ---
+ERROR:  insert or update on table "orders" violates foreign key constraint "orders_customer_id_fkey"
+DETAIL:  Key (customer_id)=(999) is not present in table "customers".

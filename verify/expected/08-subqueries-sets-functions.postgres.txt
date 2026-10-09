@@ -1,0 +1,110 @@
+# guide-sql-hash: fafb51995d76
+ id
+----
+ 12
+ 16
+(2 rows)
+
+ name
+------
+ Ana
+ Luis
+(2 rows)
+
+ name
+-------
+ Marta
+(1 row)
+
+ name
+------
+ Ana
+(1 row)
+
+ name  | order_count
+-------+-------------
+ Ana   |           3
+ Luis  |           1
+ Marta |           0
+(3 rows)
+
+      avg_spend
+----------------------
+ 140.0000000000000000
+(1 row)
+
+ name | total
+------+--------
+ Ana  | 200.00
+(1 row)
+
+ id
+----
+ 16
+(1 row)
+
+  city
+---------
+ Bilbao
+ Madrid
+ Seville
+(3 rows)
+
+  city
+---------
+ Bilbao
+ Madrid
+ Madrid
+ Madrid
+ Seville
+(5 rows)
+
+  city
+--------
+ Madrid
+(1 row)
+
+  city
+---------
+ Seville
+(1 row)
+
+ product  | amount | price_range
+----------+--------+-------------
+ Keyboard |  50.00 | medium
+ Mouse    |  30.00 | cheap
+ Monitor  |  80.00 | medium
+ Monitor  | 120.00 | expensive
+(4 rows)
+
+ name  |    email
+-------+--------------
+ Ana   | ana@mail.com
+ Luis  | no email
+ Marta | no email
+(3 rows)
+
+ nullif_zero
+-------------
+
+(1 row)
+
+  u  |  l  | len | t | sub |      c       |        r
+-----+-----+-----+---+-----+--------------+-----------------
+ ANA | ana |   3 | x | Ana | Ana - Madrid | ana at mail.com
+(1 row)
+
+    pipes
+--------------
+ Ana - Madrid
+(1 row)
+
+  y
+------
+ 2026
+(1 row)
+--- stderr ---
+ERROR:  function year(date) does not exist
+LINE 1: SELECT YEAR(order_date) AS y FROM orders WHERE id = 10;
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.

@@ -1,0 +1,8 @@
+# guide-sql-hash: 1e0220628771
+ product  | quantity
+----------+----------
+ Keyboard |       15
+ Mouse    |        3
+(2 rows)
+--- stderr ---
+

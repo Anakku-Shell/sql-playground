@@ -5,6 +5,10 @@
   "scripts": {
     "test": "node --test scripts/*.test.mjs",
     "build:sections": "node scripts/split-guide.mjs",
-    "check:sections": "node scripts/split-guide.mjs --check"
+    "check:sections": "node scripts/split-guide.mjs --check",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down -v",
+    "db:load": "node scripts/verify-sql.mjs --load",
+    "verify:sql": "node scripts/verify-sql.mjs"
   }
 }

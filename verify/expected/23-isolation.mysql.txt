@@ -1,0 +1,13 @@
+# guide-sql-hash: 5605c15e1d5f
++----------+
+| quantity |
++----------+
+|       10 |
++----------+
++----------+
+| quantity |
++----------+
+|        9 |
++----------+
+--- stderr ---
+ERROR 1568 (25001) at line 16: Transaction characteristics can't be changed while a transaction is in progress

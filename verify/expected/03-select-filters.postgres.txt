@@ -1,0 +1,141 @@
+# guide-sql-hash: bd786c9923fe
+ customer
+----------
+ Ana
+ Luis
+ Marta
+ Álvarez
+(4 rows)
+
+   city
+----------
+ Madrid
+ Seville
+ Valencia
+(3 rows)
+
+ id
+----
+ 16
+ 17
+(2 rows)
+
+ name
+-------
+ Ana
+ Marta
+(2 rows)
+
+  name
+---------
+ Luis
+ Álvarez
+(2 rows)
+
+ id
+----
+ 10
+ 12
+ 16
+(3 rows)
+
+  name
+---------
+ Ana
+ Luis
+ Marta
+ Álvarez
+(4 rows)
+
+ name
+------
+ Luis
+(1 row)
+
+ starts_with_a
+---------------
+ Ana
+(1 row)
+
+ ends_with_ez
+--------------
+ Álvarez
+(1 row)
+
+ gmail
+-------
+ Marta
+(1 row)
+
+ second_letter_a
+-----------------
+ Marta
+(1 row)
+
+  not_a
+---------
+ Luis
+ Marta
+ Álvarez
+(3 rows)
+
+ lower_like
+------------
+ Ana
+(1 row)
+
+ ilike
+-------
+ Ana
+(1 row)
+
+ id | amount
+----+--------
+ 17 | 900.00
+ 16 | 120.00
+(2 rows)
+
+ id
+----
+ 12
+ 11
+(2 rows)
+
+  name
+---------
+ Ana
+ Marta
+ Luis
+ Álvarez
+(4 rows)
+
+ n | with_email
+---+------------
+ 4 |          3
+(1 row)
+
+  total  | min_amount | max_amount
+---------+------------+------------
+ 1180.00 |      30.00 |     900.00
+(1 row)
+
+ customer_id | total
+-------------+--------
+           1 | 200.00
+           2 |  80.00
+           3 | 900.00
+(3 rows)
+
+   city   | customer_count
+----------+----------------
+ Madrid   |              2
+ Seville  |              1
+ Valencia |              1
+(3 rows)
+
+ customer_id | total
+-------------+--------
+           3 | 900.00
+(1 row)
+--- stderr ---
+

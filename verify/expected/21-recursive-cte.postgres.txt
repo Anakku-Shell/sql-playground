@@ -1,0 +1,24 @@
+# guide-sql-hash: 14f5c30a1803
+  name  | level |          path
+--------+-------+------------------------
+ Carmen |     1 | Carmen
+ Lucía  |     2 | Carmen > Lucía
+ Pedro  |     2 | Carmen > Pedro
+ Jorge  |     3 | Carmen > Pedro > Jorge
+(4 rows)
+
+    day     | sales
+------------+-------
+ 2026-01-01 |     0
+ 2026-01-02 | 80.00
+ 2026-01-03 |     0
+ 2026-01-04 | 10.00
+ 2026-01-05 |     0
+(5 rows)
+
+ days_in_january
+-----------------
+              31
+(1 row)
+--- stderr ---
+

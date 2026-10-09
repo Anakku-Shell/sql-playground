@@ -1,0 +1,67 @@
+# guide-sql-hash: 72c09443b520
+ name | amount
+------+--------
+ Ana  |  50.00
+ Ana  |  30.00
+ Luis |  80.00
+(3 rows)
+
+ name  | amount
+-------+--------
+ Ana   |  50.00
+ Ana   |  30.00
+ Luis  |  80.00
+ Marta |
+(4 rows)
+
+ name
+-------
+ Marta
+(1 row)
+
+ name | amount
+------+--------
+ Ana  |  50.00
+ Ana  |  30.00
+ Luis |  80.00
+      |  20.00
+(4 rows)
+
+ name  | amount
+-------+--------
+ Ana   |  50.00
+ Ana   |  30.00
+ Luis  |  80.00
+ Marta |
+       |  20.00
+(5 rows)
+
+ name  | size
+-------+------
+ Ana   | S
+ Ana   | M
+ Ana   | L
+ Luis  | S
+ Luis  | M
+ Luis  | L
+ Marta | S
+ Marta | M
+ Marta | L
+(9 rows)
+
+ employee | manager
+----------+---------
+ Carmen   |
+ Pedro    | Carmen
+ Lucía    | Carmen
+ Jorge    | Pedro
+(4 rows)
+
+ name  | order_count | total
+-------+-------------+-------
+ Ana   |           2 | 80.00
+ Luis  |           1 | 80.00
+ Marta |           0 |     0
+(3 rows)
+--- stderr ---
+

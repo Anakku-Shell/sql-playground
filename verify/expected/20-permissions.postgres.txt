@@ -1,0 +1,7 @@
+# guide-sql-hash: 36058cc4a885
+ table_name | privilege_type
+------------+----------------
+ customers  | SELECT
+(1 row)
+--- stderr ---
+

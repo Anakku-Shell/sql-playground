@@ -1,0 +1,31 @@
+# Local databases to practice with and to verify the guide's SQL.
+#   npm run db:up      start both (waits until they're ready)
+#   npm run db:load    load the example tables from the guide
+#   npm run db:down    stop and delete them
+# Credentials are for local practice only.
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: playground
+      MYSQL_DATABASE: playground
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-pplayground"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: playground
+      POSTGRES_DB: playground
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "playground"]
+      interval: 2s
+      timeout: 5s
+      retries: 60

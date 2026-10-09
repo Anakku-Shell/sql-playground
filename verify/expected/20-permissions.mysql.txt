@@ -1,0 +1,23 @@
+# guide-sql-hash: 36058cc4a885
++-----------------------------------------------------+
+| Grants for analyst@localhost                        |
++-----------------------------------------------------+
+| GRANT USAGE ON *.* TO `analyst`@`localhost`         |
+| GRANT SELECT ON `verify`.* TO `analyst`@`localhost` |
++-----------------------------------------------------+
++-------------------------------------------------------------------+
+| Grants for app@%                                                  |
++-------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `app`@`%`                                   |
+| GRANT SELECT, INSERT ON `verify`.`orders` TO `app`@`%`            |
+| GRANT EXECUTE ON PROCEDURE `verify`.`apply_discount` TO `app`@`%` |
++-------------------------------------------------------------------+
++-----------------------------------------------------+
+| Grants for analyst@localhost                        |
++-----------------------------------------------------+
+| GRANT USAGE ON *.* TO `analyst`@`localhost`         |
+| GRANT SELECT ON `verify`.* TO `analyst`@`localhost` |
+| GRANT `read_only`@`%` TO `analyst`@`localhost`      |
++-----------------------------------------------------+
+--- stderr ---
+
