@@ -15,6 +15,20 @@ export const SLUGS = [
   '21-recursive-cte', '22-indexes-explain', '23-isolation-acid', '24-exercises', '25-cheat-sheet',
 ];
 
+// What each position's title must match, in English or Spanish. Catches
+// sections that were moved without updating SLUGS, which would otherwise give
+// files whose name doesn't match their content.
+export const TITLE_HINTS = [
+  /DDL/, /DML/, /SELECT/, /WHERE/, /ORDER BY/,
+  /GROUP BY/, /join/i, /Subquer|Subconsultas/, /UNION/, /Useful functions|Funciones útiles/,
+  /views|vistas/, /Transactions ·|Transacciones ·/, /procedures|procedimientos/i, /NULL/, /Constraints|Restricciones/,
+  /Normali/, /Window|ventana/, /UPSERT/, /Triggers/, /permissions|permisos/,
+  /recursive|recursivas/i, /EXPLAIN/, /ACID/, /Exercises|Ejercicios/, /Cheat sheet|Chuleta/,
+];
+
+// H1s allowed between sections; they group sections in the single file.
+const GROUP_HEADINGS = ['# Going further', '# Ampliación'];
+
 // Splits text into lines, each tagged with whether it sits inside a ``` fence.
 // Fence delimiter lines themselves count as inside.
 function scanLines(text) {
@@ -51,13 +65,20 @@ export function parseGuide(markdown, sourceName) {
   const intro = trimEdges(lines.slice(0, starts[0])).map((l) => l.line).join('\n');
 
   const sections = starts.map((start, n) => {
-    const slice = lines
-      .slice(start, starts[n + 1] ?? lines.length)
-      .filter((l) => l.code || !/^# /.test(l.line));      // group H1s like "# Going further"
-    const body = trimEdges(slice)
+    const title = lines[start].line.slice(3);
+    if (!TITLE_HINTS[n].test(title)) {
+      throw new Error(
+        `Section ${n + 1} in ${sourceName} is "${title}", which doesn't look like ${SLUGS[n]}. ` +
+        'If sections were reordered, update SLUGS and TITLE_HINTS in scripts/split-guide.mjs.',
+      );
+    }
+    const slice = lines.slice(start, starts[n + 1] ?? lines.length);
+    const stray = slice.find((l) => !l.code && /^# /.test(l.line) && !GROUP_HEADINGS.includes(l.line));
+    if (stray) throw new Error(`Unexpected H1 "${stray.line}" in ${sourceName}, section ${n + 1}`);
+    const body = trimEdges(slice.filter((l) => l.code || !GROUP_HEADINGS.includes(l.line)))
       .map((l) => (!l.code && /^#{2,6} /.test(l.line) ? l.line.slice(1) : l.line))
       .join('\n');
-    return { slug: SLUGS[n], title: lines[start].line.slice(3), body };
+    return { slug: SLUGS[n], title, body };
   });
 
   return { intro, sections };
@@ -67,10 +88,12 @@ export const LANGS = {
   en: {
     source: 'sql-guide.md', other: 'es', flag: '🇪🇸', otherName: 'Español',
     prev: 'Previous', next: 'Next', index: 'Index', single: 'Prefer a single file?',
+    tables: 'Examples use the `customers` and `orders` tables described in the [index](README.md).',
   },
   es: {
     source: 'sql-guide-es.md', other: 'en', flag: '🇬🇧', otherName: 'English',
     prev: 'Anterior', next: 'Siguiente', index: 'Índice', single: '¿Prefieres un solo fichero?',
+    tables: 'Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).',
   },
 };
 
@@ -96,18 +119,21 @@ function renderIndex(lang, intro, sections) {
   // inside sections/ it would link to itself.
   const self = lines.findIndex((l) => !l.code && l.line.includes('](sections/'));
   if (self >= 0) lines.splice(self, lines[self + 1]?.line === '' ? 2 : 1);
+  const cheatSheet = sections[SLUGS.length - 1];
   const body = lines.map(({ line, code }) => {
     if (code) return line;
-    const toc = line.match(/^(\d+)\. (.+)$/);
+    // Table of contents lines end with level tags, e.g. "7. JOINs · 🟡 ⭐⭐⭐".
+    const toc = line.match(/^(\d+)\. (.+ · [🟢🟡🔴].*)$/u);
     if (toc && toc[1] >= 1 && toc[1] <= SLUGS.length - 1) {
-      return `${toc[1]}. [${toc[2]}](${SLUGS[toc[1] - 1]}.md)`;
+      const link = `${toc[1]}. [${toc[2]}](${SLUGS[toc[1] - 1]}.md)`;
+      // The cheat sheet isn't numbered in the guide; list it right after the last section.
+      if (Number(toc[1]) !== SLUGS.length - 1) return link;
+      return `${link}\n\n[${cheatSheet.title}](${cheatSheet.slug}.md)`;
     }
     return line.replace(/\]\(sql-guide(-es)?\.md\)/, `](../${t.other}/README.md)`);
   });
-  const cheatSheet = sections[SLUGS.length - 1];
   return [
     header(t.source), '', ...body, '',
-    `[${cheatSheet.title}](${cheatSheet.slug}.md)`, '',
     `${t.single} [${t.source}](../../${t.source})`, '',
   ].join('\n');
 }
@@ -121,29 +147,44 @@ export function renderAll(guides) {
     files.set(`${dir}/README.md`, renderIndex(lang, intro, sections));
     sections.forEach((s, n) => {
       const nav = renderNav(lang, n);
-      files.set(`${dir}/${s.slug}.md`, [header(source), '', nav, '', s.body, '', '---', '', nav, ''].join('\n'));
+      // Exercises bring their own data and the cheat sheet has no examples.
+      const note = n < SLUGS.length - 2 ? [`> ${LANGS[lang].tables}`, ''] : [];
+      files.set(`${dir}/${s.slug}.md`, [header(source), '', nav, '', ...note, s.body, '', '---', '', nav, ''].join('\n'));
     });
   }
   return files;
 }
 
-// Generated .md files currently on disk under sections/<lang>/, as repo-relative paths.
-function existingFiles(root) {
-  return Object.keys(LANGS).flatMap((lang) => {
-    const dir = path.join(root, 'sections', lang);
-    if (!existsSync(dir)) return [];
-    return readdirSync(dir).filter((f) => f.endsWith('.md')).map((f) => `sections/${lang}/${f}`);
-  });
+// Everything under sections/ that the generator doesn't produce, as repo-relative
+// paths (folders end in "/"): `files` can be deleted safely, `folders` are only reported.
+function strayEntries(files, root) {
+  const stray = { files: [], folders: [] };
+  const sectionsDir = path.join(root, 'sections');
+  if (!existsSync(sectionsDir)) return stray;
+  for (const top of readdirSync(sectionsDir, { withFileTypes: true })) {
+    if (!top.isDirectory() || !(top.name in LANGS)) {
+      (top.isDirectory() ? stray.folders : stray.files).push(`sections/${top.name}${top.isDirectory() ? '/' : ''}`);
+      continue;
+    }
+    for (const entry of readdirSync(path.join(sectionsDir, top.name), { withFileTypes: true })) {
+      const rel = `sections/${top.name}/${entry.name}`;
+      if (entry.isDirectory()) stray.folders.push(`${rel}/`);
+      else if (!files.has(rel)) stray.files.push(rel);
+    }
+  }
+  stray.files.sort();
+  stray.folders.sort();
+  return stray;
 }
 
 export function writeFiles(files, root) {
-  const removed = existingFiles(root).filter((f) => !files.has(f)).sort();
+  const { files: removed, folders: kept } = strayEntries(files, root);
   for (const f of removed) unlinkSync(path.join(root, f));
   for (const [file, content] of files) {
     mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
     writeFileSync(path.join(root, file), content);
   }
-  return { written: [...files.keys()], removed };
+  return { written: [...files.keys()], removed, kept };
 }
 
 export function checkFiles(files, root) {
@@ -154,8 +195,9 @@ export function checkFiles(files, root) {
     if (!existsSync(target)) missing.push(file);
     else if (readFileSync(target, 'utf8').replaceAll('\r\n', '\n') !== content) stale.push(file);
   }
-  const extra = existingFiles(root).filter((f) => !files.has(f));
-  return { stale: stale.sort(), missing: missing.sort(), extra: extra.sort() };
+  const stray = strayEntries(files, root);
+  const extra = [...stray.files, ...stray.folders].sort();
+  return { stale: stale.sort(), missing: missing.sort(), extra };
 }
 
 function main(args) {
@@ -176,8 +218,9 @@ function main(args) {
     return;
   }
 
-  const { written, removed } = writeFiles(files, root);
+  const { written, removed, kept } = writeFiles(files, root);
   console.log(`Wrote ${written.length} files, removed ${removed.length}`);
+  if (kept.length) console.warn(`Not generated, left in place (remove by hand):\n${kept.join('\n')}`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

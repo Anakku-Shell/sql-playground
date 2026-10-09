@@ -48,6 +48,8 @@ Las secciones 1–13 son la **base**. Las 14–23 son la **ampliación**, ordena
 
 24. [Ejercicios con solución · 🟢🟡🔴](24-exercises.md)
 
+[Chuleta final](25-cheat-sheet.md)
+
 ---
 
 Todos los ejemplos usan estas dos tablas:
@@ -56,7 +58,5 @@ Todos los ejemplos usan estas dos tablas:
 -- clientes(id, nombre, email, ciudad, fecha_alta)
 -- pedidos(id, cliente_id, producto, importe, fecha)
 ```
-
-[Chuleta final](25-cheat-sheet.md)
 
 ¿Prefieres un solo fichero? [sql-guide-es.md](../../sql-guide-es.md)

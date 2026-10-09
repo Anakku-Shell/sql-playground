@@ -2,6 +2,8 @@
 
 [← Anterior](07-joins.md) · [Índice](README.md) · [Siguiente →](09-set-operations.md) · 🇬🇧 [English](../en/08-subqueries.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 8. Subconsultas (subselects) · 🟡 ⭐⭐⭐
 
 Un `SELECT` dentro de otro.

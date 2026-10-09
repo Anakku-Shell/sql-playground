@@ -2,6 +2,8 @@
 
 [Index](README.md) · [Next →](02-dml.md) · 🇪🇸 [Español](../es/01-ddl.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 1. Creating and altering tables (DDL) · 🟢 ⭐⭐⭐
 
 ```sql

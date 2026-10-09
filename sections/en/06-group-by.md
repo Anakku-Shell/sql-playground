@@ -2,6 +2,8 @@
 
 [← Previous](05-order-by-limit.md) · [Index](README.md) · [Next →](07-joins.md) · 🇪🇸 [Español](../es/06-group-by.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 6. Aggregate functions and GROUP BY · 🟢 ⭐⭐⭐
 
 ```sql

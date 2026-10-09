@@ -2,6 +2,8 @@
 
 [← Previous](19-triggers.md) · [Index](README.md) · [Next →](21-recursive-cte.md) · 🇪🇸 [Español](../es/20-permissions.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 20. Users and permissions · 🟡 ⭐
 
 Golden rule: **least privilege**. Each user or application gets only the permissions it needs.

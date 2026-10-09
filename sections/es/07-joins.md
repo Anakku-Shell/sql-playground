@@ -2,6 +2,8 @@
 
 [← Anterior](06-group-by.md) · [Índice](README.md) · [Siguiente →](08-subqueries.md) · 🇬🇧 [English](../en/07-joins.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 7. JOINs · 🟡 ⭐⭐⭐
 
 Combinan filas de varias tablas según una condición.

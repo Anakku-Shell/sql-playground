@@ -2,6 +2,8 @@
 
 [← Previous](17-window-functions.md) · [Index](README.md) · [Next →](19-triggers.md) · 🇪🇸 [Español](../es/18-upsert.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 18. UPSERT (insert or update) · 🟡 ⭐⭐
 
 "If the row doesn't exist, insert it; if it does, update it", in a single statement. It needs a `PRIMARY KEY` or `UNIQUE` to know what "already exists" means.

@@ -2,6 +2,8 @@
 
 [← Anterior](11-indexes-views.md) · [Índice](README.md) · [Siguiente →](13-stored-procedures.md) · 🇬🇧 [English](../en/12-transactions.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 12. Transacciones · 🟡 ⭐⭐⭐
 
 ```sql

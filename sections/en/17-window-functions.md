@@ -2,6 +2,8 @@
 
 [← Previous](16-normalization.md) · [Index](README.md) · [Next →](18-upsert.md) · 🇪🇸 [Español](../es/17-window-functions.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 17. Window functions · 🟡 ⭐⭐⭐
 
 They compute over a group of rows **without collapsing them into one**, unlike `GROUP BY`. Each row keeps its data and also gets the result. Available in MySQL 8+, PostgreSQL, SQL Server and SQLite 3.25+.

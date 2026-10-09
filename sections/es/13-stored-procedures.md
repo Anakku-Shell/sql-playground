@@ -2,6 +2,8 @@
 
 [← Anterior](12-transactions.md) · [Índice](README.md) · [Siguiente →](14-null.md) · 🇬🇧 [English](../en/13-stored-procedures.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 13. Procedimientos almacenados · 🟡 ⭐⭐
 
 Un procedimiento almacenado es un bloque de SQL con nombre que se guarda **en la base de datos** y se ejecuta con una llamada. Puede recibir parámetros, usar variables, `IF`, bucles y transacciones.

@@ -2,6 +2,8 @@
 
 [← Anterior](18-upsert.md) · [Índice](README.md) · [Siguiente →](20-permissions.md) · 🇬🇧 [English](../en/19-triggers.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 19. Triggers · 🟡 ⭐⭐
 
 Un trigger es un bloque de código que la base de datos ejecuta **automáticamente** cuando ocurre un `INSERT`, `UPDATE` o `DELETE` en una tabla. Es como un procedimiento almacenado que nadie llama a mano.

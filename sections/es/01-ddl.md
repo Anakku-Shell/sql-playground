@@ -2,6 +2,8 @@
 
 [Índice](README.md) · [Siguiente →](02-dml.md) · 🇬🇧 [English](../en/01-ddl.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 1. Crear y modificar tablas (DDL) · 🟢 ⭐⭐⭐
 
 ```sql

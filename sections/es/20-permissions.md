@@ -2,6 +2,8 @@
 
 [← Anterior](19-triggers.md) · [Índice](README.md) · [Siguiente →](21-recursive-cte.md) · 🇬🇧 [English](../en/20-permissions.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 20. Usuarios y permisos · 🟡 ⭐
 
 Regla de oro: **mínimo privilegio**. Cada usuario o aplicación tiene solo los permisos que necesita.

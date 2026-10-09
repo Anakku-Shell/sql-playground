@@ -2,6 +2,8 @@
 
 [← Previous](13-stored-procedures.md) · [Index](README.md) · [Next →](15-constraints.md) · 🇪🇸 [Español](../es/14-null.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 14. NULL pitfalls · 🟢 ⭐⭐⭐
 
 `NULL` isn't a value: it means **"unknown"**. That's why it doesn't behave like 0 or an empty string, and it's the most common source of bugs in SQL.

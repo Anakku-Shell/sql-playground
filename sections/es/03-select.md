@@ -2,6 +2,8 @@
 
 [← Anterior](02-dml.md) · [Índice](README.md) · [Siguiente →](04-where.md) · 🇬🇧 [English](../en/03-select.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 3. SELECT básico · 🟢 ⭐⭐⭐
 
 ```sql

@@ -2,6 +2,8 @@
 
 [← Previous](09-set-operations.md) · [Index](README.md) · [Next →](11-indexes-views.md) · 🇪🇸 [Español](../es/10-functions.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 10. Useful functions · 🟢 ⭐⭐
 
 ## CASE (if/else)

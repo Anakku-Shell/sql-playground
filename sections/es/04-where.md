@@ -2,6 +2,8 @@
 
 [← Anterior](03-select.md) · [Índice](README.md) · [Siguiente →](05-order-by-limit.md) · 🇬🇧 [English](../en/04-where.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 4. WHERE y operadores de filtrado · 🟢 ⭐⭐⭐
 
 ```sql

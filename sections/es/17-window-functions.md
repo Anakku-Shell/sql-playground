@@ -2,6 +2,8 @@
 
 [← Anterior](16-normalization.md) · [Índice](README.md) · [Siguiente →](18-upsert.md) · 🇬🇧 [English](../en/17-window-functions.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 17. Funciones de ventana · 🟡 ⭐⭐⭐
 
 Hacen cálculos sobre un grupo de filas **sin juntarlas en una sola**, a diferencia de `GROUP BY`. Cada fila conserva sus datos y además recibe el cálculo. Están disponibles en MySQL 8+, PostgreSQL, SQL Server y SQLite 3.25+.

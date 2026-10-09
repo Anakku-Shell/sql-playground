@@ -2,6 +2,8 @@
 
 [← Previous](02-dml.md) · [Index](README.md) · [Next →](04-where.md) · 🇪🇸 [Español](../es/03-select.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 3. Basic SELECT · 🟢 ⭐⭐⭐
 
 ```sql

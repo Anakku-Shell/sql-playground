@@ -2,6 +2,8 @@
 
 [← Previous](15-constraints.md) · [Index](README.md) · [Next →](17-window-functions.md) · 🇪🇸 [Español](../es/16-normalization.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 16. Normalization · 🟢 ⭐⭐
 
 It's the way to split data into tables so you **don't repeat information**. Repeated data leads to inconsistencies: if Ana's city appears in 50 rows, sooner or later one of them won't get updated.

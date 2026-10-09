@@ -2,6 +2,8 @@
 
 [← Anterior](08-subqueries.md) · [Índice](README.md) · [Siguiente →](10-functions.md) · 🇬🇧 [English](../en/09-set-operations.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 9. UNION, INTERSECT, EXCEPT · 🟡 ⭐⭐
 
 Combinan resultados de varios SELECT (mismo nº de columnas y tipos compatibles).

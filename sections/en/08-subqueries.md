@@ -2,6 +2,8 @@
 
 [← Previous](07-joins.md) · [Index](README.md) · [Next →](09-set-operations.md) · 🇪🇸 [Español](../es/08-subqueries.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 8. Subqueries · 🟡 ⭐⭐⭐
 
 A `SELECT` inside another one.

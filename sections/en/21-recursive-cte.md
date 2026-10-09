@@ -2,6 +2,8 @@
 
 [← Previous](20-permissions.md) · [Index](README.md) · [Next →](22-indexes-explain.md) · 🇪🇸 [Español](../es/21-recursive-cte.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 21. Recursive CTEs · 🔴 ⭐⭐
 
 A CTE that calls itself. Useful for walking **hierarchies** (org charts, categories and subcategories, folders) and for **generating series**.

@@ -1,9 +1,13 @@
 name: Sections
 
 # Fails if sections/ is out of date with sql-guide.md / sql-guide-es.md.
+# Runs on every push to any branch (pull requests from this repo are covered
+# by the push of their branch).
 on:
   push:
-  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   check:

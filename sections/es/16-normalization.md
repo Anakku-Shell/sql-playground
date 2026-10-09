@@ -2,6 +2,8 @@
 
 [← Anterior](15-constraints.md) · [Índice](README.md) · [Siguiente →](17-window-functions.md) · 🇬🇧 [English](../en/16-normalization.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 16. Normalización · 🟢 ⭐⭐
 
 Es la forma de repartir los datos en tablas para **no repetir información**. Repetir datos provoca incoherencias: si la ciudad de Ana aparece en 50 filas, tarde o temprano alguna no se actualizará.

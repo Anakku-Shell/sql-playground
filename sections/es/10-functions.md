@@ -2,6 +2,8 @@
 
 [← Anterior](09-set-operations.md) · [Índice](README.md) · [Siguiente →](11-indexes-views.md) · 🇬🇧 [English](../en/10-functions.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 10. Funciones útiles · 🟢 ⭐⭐
 
 ## CASE (if/else)

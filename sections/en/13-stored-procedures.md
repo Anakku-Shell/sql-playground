@@ -2,6 +2,8 @@
 
 [← Previous](12-transactions.md) · [Index](README.md) · [Next →](14-null.md) · 🇪🇸 [Español](../es/13-stored-procedures.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 13. Stored procedures · 🟡 ⭐⭐
 
 A stored procedure is a named block of SQL that's saved **in the database** and run with a call. It can take parameters and use variables, `IF`, loops and transactions.

@@ -2,6 +2,8 @@
 
 [← Anterior](17-window-functions.md) · [Índice](README.md) · [Siguiente →](19-triggers.md) · 🇬🇧 [English](../en/18-upsert.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 18. UPSERT (insertar o actualizar) · 🟡 ⭐⭐
 
 "Si la fila no existe, insértala; si ya existe, actualízala", en una sola sentencia. Necesita una `PRIMARY KEY` o un `UNIQUE` para saber qué significa "ya existe".

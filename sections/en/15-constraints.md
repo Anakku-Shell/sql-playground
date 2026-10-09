@@ -2,6 +2,8 @@
 
 [← Previous](14-null.md) · [Index](README.md) · [Next →](16-normalization.md) · 🇪🇸 [Español](../es/15-constraints.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 15. Constraints in depth · 🟢 ⭐⭐⭐
 
 Constraints make the **database** reject bad data, instead of trusting the application never to make a mistake.

@@ -2,6 +2,8 @@
 
 [← Previous](04-where.md) · [Index](README.md) · [Next →](06-group-by.md) · 🇪🇸 [Español](../es/05-order-by-limit.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 5. ORDER BY and LIMIT · 🟢 ⭐⭐⭐
 
 ```sql

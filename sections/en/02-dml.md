@@ -2,6 +2,8 @@
 
 [← Previous](01-ddl.md) · [Index](README.md) · [Next →](03-select.md) · 🇪🇸 [Español](../es/02-dml.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 2. INSERT, UPDATE, DELETE (DML) · 🟢 ⭐⭐⭐
 
 ## INSERT

@@ -48,6 +48,8 @@ Sections 1–13 are the **core**. Sections 14–23 are **going further**, ordere
 
 24. [Exercises with solutions · 🟢🟡🔴](24-exercises.md)
 
+[Cheat sheet](25-cheat-sheet.md)
+
 ---
 
 All examples use these two tables:
@@ -56,7 +58,5 @@ All examples use these two tables:
 -- customers(id, name, email, city, signup_date)
 -- orders(id, customer_id, product, amount, order_date)
 ```
-
-[Cheat sheet](25-cheat-sheet.md)
 
 Prefer a single file? [sql-guide.md](../../sql-guide.md)

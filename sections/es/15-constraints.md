@@ -2,6 +2,8 @@
 
 [← Anterior](14-null.md) · [Índice](README.md) · [Siguiente →](16-normalization.md) · 🇬🇧 [English](../en/15-constraints.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 15. Restricciones (constraints) a fondo · 🟢 ⭐⭐⭐
 
 Las restricciones hacen que la **base de datos** impida datos incorrectos, en vez de confiar en que la aplicación nunca se equivoque.

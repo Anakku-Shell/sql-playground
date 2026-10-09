@@ -2,6 +2,8 @@
 
 [← Anterior](13-stored-procedures.md) · [Índice](README.md) · [Siguiente →](15-constraints.md) · 🇬🇧 [English](../en/14-null.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 14. Trampas con NULL · 🟢 ⭐⭐⭐
 
 `NULL` no es un valor: significa **"desconocido"**. Por eso no se comporta como un 0 o un texto vacío, y es la fuente de errores más habitual en SQL.

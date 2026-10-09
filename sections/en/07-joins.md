@@ -2,6 +2,8 @@
 
 [← Previous](06-group-by.md) · [Index](README.md) · [Next →](08-subqueries.md) · 🇪🇸 [Español](../es/07-joins.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 7. JOINs · 🟡 ⭐⭐⭐
 
 They combine rows from several tables based on a condition.

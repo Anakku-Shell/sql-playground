@@ -2,6 +2,8 @@
 
 [← Previous](18-upsert.md) · [Index](README.md) · [Next →](20-permissions.md) · 🇪🇸 [Español](../es/19-triggers.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 19. Triggers · 🟡 ⭐⭐
 
 A trigger is a block of code the database runs **automatically** when an `INSERT`, `UPDATE` or `DELETE` happens on a table. It's like a stored procedure nobody calls by hand.

@@ -2,6 +2,8 @@
 
 [← Anterior](22-indexes-explain.md) · [Índice](README.md) · [Siguiente →](24-exercises.md) · 🇬🇧 [English](../en/23-isolation-acid.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 23. Aislamiento de transacciones y ACID · 🔴 ⭐
 
 ## ACID: lo que garantiza una transacción

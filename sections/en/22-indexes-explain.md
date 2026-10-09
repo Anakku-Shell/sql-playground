@@ -2,6 +2,8 @@
 
 [← Previous](21-recursive-cte.md) · [Index](README.md) · [Next →](23-isolation-acid.md) · 🇪🇸 [Español](../es/22-indexes-explain.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 22. Indexes in depth and EXPLAIN · 🔴 ⭐⭐
 
 An index is like the index of a book: instead of reading every page (a *full scan*), you jump straight to where the data is. It's almost always implemented as a B-tree.

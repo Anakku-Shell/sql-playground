@@ -2,6 +2,8 @@
 
 [← Previous](22-indexes-explain.md) · [Index](README.md) · [Next →](24-exercises.md) · 🇪🇸 [Español](../es/23-isolation-acid.md)
 
+> Examples use the `customers` and `orders` tables described in the [index](README.md).
+
 # 23. Transaction isolation and ACID · 🔴 ⭐
 
 ## ACID: what a transaction guarantees

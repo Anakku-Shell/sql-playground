@@ -2,6 +2,8 @@
 
 [← Anterior](10-functions.md) · [Índice](README.md) · [Siguiente →](12-transactions.md) · 🇬🇧 [English](../en/11-indexes-views.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 11. Índices y vistas (lo justo) · 🟡 ⭐⭐
 
 ```sql

@@ -2,6 +2,8 @@
 
 [← Anterior](20-permissions.md) · [Índice](README.md) · [Siguiente →](22-indexes-explain.md) · 🇬🇧 [English](../en/21-recursive-cte.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 21. CTE recursivas · 🔴 ⭐⭐
 
 Una CTE que se llama a sí misma. Sirve para recorrer **jerarquías** (organigramas, categorías y subcategorías, carpetas) y para **generar series**.

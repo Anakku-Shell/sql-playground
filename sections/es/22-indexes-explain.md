@@ -2,6 +2,8 @@
 
 [← Anterior](21-recursive-cte.md) · [Índice](README.md) · [Siguiente →](23-isolation-acid.md) · 🇬🇧 [English](../en/22-indexes-explain.md)
 
+> Los ejemplos usan las tablas `clientes` y `pedidos` descritas en el [índice](README.md).
+
 # 22. Índices a fondo y EXPLAIN · 🔴 ⭐⭐
 
 Un índice es como el índice de un libro: en vez de leer todas las páginas (*full scan*), salta directamente a donde está el dato. Casi siempre se implementa como un árbol B (B-tree).
