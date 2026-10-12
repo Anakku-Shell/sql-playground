@@ -1,0 +1,28 @@
+# guide-sql-hash: 7572fa09499e
++---------------+
+| orphan_orders |
++---------------+
+|             0 |
++---------------+
++----+------------------+
+| id | has_default_date |
++----+------------------+
+|  1 |                1 |
+|  2 |                1 |
+|  3 |                1 |
++----+------------------+
++------+-------+
+| id   | name  |
++------+-------+
+|    1 | Ana   |
+|    3 | Marta |
++------+-------+
++----+-------+---------------+-----------+
+| id | name  | email         | city      |
++----+-------+---------------+-----------+
+|  1 | Ana   | ana@mail.com  | Madrid    |
+|  2 | Luis  | luis@mail.com | Barcelona |
+|  3 | Marta | NULL          | Madrid    |
++----+-------+---------------+-----------+
+--- stderr ---
+ERROR 1452 (23000) at line 23: Cannot add or update a child row: a foreign key constraint fails (`verify`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`))

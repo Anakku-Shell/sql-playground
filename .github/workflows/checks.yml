@@ -1,0 +1,32 @@
+name: Checks
+
+# Runs on every push to any branch (pull requests from this repo are covered
+# by the push of their branch).
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  # sections/ must match sql-guide.md / sql-guide-es.md.
+  sections:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npm run check:sections
+
+  # The guide's SQL must still give the reviewed output on MySQL and PostgreSQL.
+  verify-sql:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm run db:up
+      - run: npm run verify:sql

@@ -1,0 +1,15 @@
+# guide-sql-hash: d28dc68c0bff
+ id | amount
+----+--------
+ 10 |  45.00
+ 11 |  27.00
+(2 rows)
+
+ id | amount
+----+--------
+ 10 |  45.00
+ 11 |  27.00
+(2 rows)
+--- stderr ---
+ERROR:  Discount out of range (0-50%)
+CONTEXT:  PL/pgSQL function apply_discount(integer,numeric) line 4 at RAISE

@@ -1,0 +1,22 @@
+# guide-sql-hash: 5605c15e1d5f
+ transaction_isolation
+-----------------------
+ serializable
+(1 row)
+
+ quantity
+----------
+       10
+(1 row)
+
+ quantity
+----------
+        9
+(1 row)
+
+ transaction_isolation
+-----------------------
+ repeatable read
+(1 row)
+--- stderr ---
+WARNING:  SET TRANSACTION can only be used in transaction blocks

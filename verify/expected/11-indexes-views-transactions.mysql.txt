@@ -1,0 +1,14 @@
+# guide-sql-hash: 056fb0882dc5
++------+--------+
+| name | total  |
++------+--------+
+| Ana  | 200.00 |
++------+--------+
++----+---------+
+| id | balance |
++----+---------+
+|  1 |  400.00 |
+|  2 |  200.00 |
++----+---------+
+--- stderr ---
+ERROR 1064 (42000) at line 12: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1

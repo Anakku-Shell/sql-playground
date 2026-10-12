@@ -1,0 +1,15 @@
+# guide-sql-hash: 056fb0882dc5
+ name | total
+------+--------
+ Ana  | 200.00
+(1 row)
+
+ id | balance
+----+---------
+  1 |  400.00
+  2 |  200.00
+(2 rows)
+--- stderr ---
+ERROR:  syntax error at or near "ON"
+LINE 1: DROP INDEX idx_orders_date ON orders;
+                                   ^

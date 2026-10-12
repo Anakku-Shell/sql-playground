@@ -1,0 +1,30 @@
+# guide-sql-hash: 063e5d3e9890
+ id | name
+----+------
+  1 | Ana
+  2 | Luis
+(2 rows)
+
+ id | note
+----+------
+  1 | a
+  2 | b
+(2 rows)
+
+ orders_after_cascade
+----------------------
+                    0
+(1 row)
+
+ name
+------
+ Luis
+ X
+(2 rows)
+--- stderr ---
+ERROR:  new row for relation "orders" violates check constraint "orders_amount_check"
+DETAIL:  Failing row contains (1, 1, -5.00).
+ERROR:  insert or update on table "orders" violates foreign key constraint "orders_customer_id_fkey"
+DETAIL:  Key (customer_id)=(999) is not present in table "customers".
+ERROR:  new row for relation "customers" violates check constraint "chk_name"
+DETAIL:  Failing row contains (3, X, null).

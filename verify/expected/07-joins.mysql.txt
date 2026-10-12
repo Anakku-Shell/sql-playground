@@ -1,0 +1,59 @@
+# guide-sql-hash: 72c09443b520
++------+--------+
+| name | amount |
++------+--------+
+| Ana  |  50.00 |
+| Ana  |  30.00 |
+| Luis |  80.00 |
++------+--------+
++-------+--------+
+| name  | amount |
++-------+--------+
+| Ana   |  50.00 |
+| Ana   |  30.00 |
+| Luis  |  80.00 |
+| Marta |   NULL |
++-------+--------+
++-------+
+| name  |
++-------+
+| Marta |
++-------+
++------+--------+
+| name | amount |
++------+--------+
+| Ana  |  50.00 |
+| Ana  |  30.00 |
+| Luis |  80.00 |
+| NULL |  20.00 |
++------+--------+
++-------+------+
+| name  | size |
++-------+------+
+| Ana   | S    |
+| Ana   | M    |
+| Ana   | L    |
+| Luis  | S    |
+| Luis  | M    |
+| Luis  | L    |
+| Marta | S    |
+| Marta | M    |
+| Marta | L    |
++-------+------+
++----------+---------+
+| employee | manager |
++----------+---------+
+| Carmen   | NULL    |
+| Pedro    | Carmen  |
+| Lucía   | Carmen  |
+| Jorge    | Pedro   |
++----------+---------+
++-------+-------------+-------+
+| name  | order_count | total |
++-------+-------------+-------+
+| Ana   |           2 | 80.00 |
+| Luis  |           1 | 80.00 |
+| Marta |           0 |  0.00 |
++-------+-------------+-------+
+--- stderr ---
+ERROR 1064 (42000) at line 13: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FULL OUTER JOIN orders o ON o.customer_id = c.id ORDER BY c.id, o.id   -- not in' at line 1
